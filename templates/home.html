@@ -1,0 +1,37 @@
+{% from 'components/form_helper.html' import displayField %}
+{% extends "base.html" %}
+{% from "components/card.html" import card %}
+
+{% block title %}Home Page{% endblock %}
+
+
+
+{% block content %}
+    <div class="container-fluid">
+      <div class="container p-0 mt-5">
+        <div class="row justify-content-evenly">
+          <h1 class="text-center">Welcome to stock market analysis</h1>
+            <div class="col-8 pl-0 mt-5">
+              <img class="img-fluid" src="{{url_for('static', filename='logo1.png')}}"
+                  alt="Market sentiment">
+            </div>
+            <div class="col offset-md-1 mt-5" >
+              <h3>Register</h3>
+              <form action="{{ url_for('register')}}", method="POST">
+                {{ displayField(form.username, 'Username', autocomplete="off", autofocus=true) }}
+                {{ displayField(form.password, 'Password') }}
+                {{ displayField(form.confirm_pswd, 'Retype Password') }}
+                <div>
+                  {{ form.submit_button }}
+                </div>
+                  {{ form.csrf_token }}
+              </form>
+              <p> Already a member? <a href="/login">login</a></p>
+            </div>        
+        </div>
+      </div>
+    </div>
+  <!-- </section> -->
+{% endblock %}
+
+

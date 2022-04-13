@@ -1,0 +1,22 @@
+{% from 'components/form_helper.html' import displayField %}
+{% extends "base.html" %}
+
+<title>{% block title %}Login{% endblock %}</title>
+
+{% block content %}
+
+  <div class="fluid-container" style="margin: 50px; width: 20%">
+    <h2>Login</h2>
+    <p>Enter the login details to start</p>
+    
+      <form sytle="width:50%" , action="{{ url_for('login')}}", method="POST">
+      {{ displayField(form.username, 'Username', autocomplete="off", autofocus=true) }}
+      {{ displayField(form.password, 'Password') }}
+      <div >
+        {{ form.submit_button }}
+      </div>
+      {{ form.csrf_token }}
+    </form>
+
+</div>
+{% endblock %}

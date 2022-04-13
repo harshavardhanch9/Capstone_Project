@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+{% block title %}Stocks Page{% endblock %}
+
+{% block content %}
+
+  <div class="container-fluid">
+    <h1 class="text-center">Stock Market Analysis</h1>
+
+    <div class="container mt-3">
+      <h5 class="text-primary">Enter the stock ticker, days and no. of tweets</h5>
+      <form class="text-center" action="/Predict", method="POST" enctype="multipart/form-data" >
+        <div class="row">
+          <div class="col-3 mb-3">
+            <input class="form-control mt-2" type="text", placeholder="Enter ticker symbol(AAPL)" name="typeticker">
+          </div>
+          <div class="col-3 mb-3">
+            <input class="form-control mt-2" type="text", placeholder="Enter days to predict(7)" name="typedays">
+          </div>
+          <div class="col-3 mb-3">
+            <input class="form-control mt-2" type="text", placeholder="Enter number of tweets(100)" name="typetweets">
+          </div>
+          <div class="col mb-3">
+            <input class="btn btn-primary mt-2" type="submit", value="Predict Stock Analysis">
+          </div>
+        </div>
+      </form>
+
+      {% if stock %}
+  
+      <h3 class="text">Current {{stock}} stock data</h3>
+      <div class="row justify-content-evenly">
+        <div class="col mt-2">
+          <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+            <div class="card-body">
+              <h2 class="card-title">{{open_price}}</h2>
+              <p class="card-text">OPEN</p>
+            </div>
+          </div>
+        </div>
+        <div class="col mt-2 ">
+          <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+            <div class="card-body">
+              <h2 class="card-title">{{high_price}}</h2>
+              <p class="card-text">HIGH</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col mt-2">
+          <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+            <div class="card-body">
+              <h2 class="card-title">{{low_price}}</h2>
+              <p class="card-text">LOW</p>
+            </div>
+          </div>
+        </div>
+        <div class="col mt-2">
+          <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+            <div class="card-body">
+              <h2 class="card-title">{{close_price}}</h2>
+              <p class="card-text">CLOSE</p>
+            </div>
+          </div>
+        </div>
+        <div class="col mt-2">
+          <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+            <div class="card-body">
+              <h2 class="card-title">{{volume}}</h2>
+              <p class="card-text">VOLUME</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  
+      <!-- <div class="container mt-3"></div>     -->
+      <div class="row">
+        <div class="col-6 mt-2">
+            <div class="card">
+                <div class="card-title mb-0">
+                    <h4 class="text-primary mt-2 ml-2">TRENDS IN {{stock}} STOCK PRICES</h4>
+                </div>
+                <img src="{{url_for('static', filename='trend.png')}}" alt="trends" />
+            </div>
+      
+        </div>
+        
+        
+        <div class="col-6 mt-2">
+            <div class="card">
+                <div class="card-title mb-0">
+                    <h4 class="text-primary mt-2 ml-2">LSTM MODEL ACCURACY</h4>
+                </div>
+                <img src="{{url_for('static', filename='lstm.png')}}" alt="model accuracy"/>
+            </div>
+        </div>
+      </div>
+      <h3 class="text mt-4">Price prediction using LSTM model</h3>
+      <div class="row">
+        <div class="col-6 mt-2">
+          <div class="card">
+              <div class="card-title">
+                  <h4 class="text-primary mt-2 ml-2">PREDICTED {{stock}} PRICE FOR THE NEXT {{period}} DAYS</h4>
+              </div>
+              <div class="card-body">
+                  <div class="table-responsive">
+                      <table class="table">
+                          <thead>
+                              <tr>
+                                  <th>#</th>
+                                  <th>Close price</th>
+                                  <!-- <th></th>
+                                  <th></th>
+                                  <th></th> -->
+                              </tr>
+                          </thead>
+                          <tbody>
+                            
+                              <tr>
+                                  <td>
+                                      <div>
+                                          <img style="padding: 15px; height:200px; width:200px " src="{{url_for('static', filename='predict.png')}}" alt="predicted prices">
+                                      </div>
+                                  </td>
+                                  <td>{% for row in output %}
+                                            {{row[0]}}<br>
+                                      {% endfor %}</td>
+                                  <!-- <td><span></span></td>
+                                  <td><span></span></td>
+                                  <td><span class="badge badge-success"></span></td> -->
+                              </tr>
+                              
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+        </div>
+      
+      
+        <div class="col-lg-6 mt-2">
+          <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+              <h2 class="card-title">Based on the LSTM prediction a {{expect}} in {{stock}} stock is expected ==> {{movement}} </h2>
+              <p class="card-text">Recommendation</p>
+            </div>
+          </div>
+        </div>
+      </div>
+           
+      {% endif %}
+              
+    </div>
+
+    <!-- sentiment analysis -->
+    {% if prediction %}
+    <div class="container mt-4">
+      <h3 class="text">Sentiment analysis using NLP</h3>
+      <!-- <h4 class="text-primary">Enter the search word and no. of tweets for sentiment analysis</h4> -->
+      <div class="col-lg-12 p-0 mt-3">
+        <div class="card">
+            <div class="card-title">
+              <h4 class="text-primary mt-2 ml-2">RECENT TWEETS AND NEWS ABOUT {{stock}} </h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                  <table class="table">
+                      <thead>
+                          <tr>
+                              <th>#</th>
+                              <th>Tweets</th>
+                              <th></th>
+                              <th></th>
+                              <th></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        
+                          <tr>
+                              <td>
+                                  <div class="round-img">
+                                      <a href="https://twitter.com/"><img style="padding: 0px,0px,0px,0px;width:70px;height: 70px;" src="{{url_for('static', filename='twitter.png')}}" alt=""></a>
+                                  </div>
+                              </td>
+                              <td>{% for i in range(1,10)%}
+                                     {{tweet_list[i]}}<br>
+                                  {% endfor %}</td>
+                              <td><span></span></td>
+                              <td><span></span></td>
+                              <td><span class="badge badge-success"></span></td>
+                          </tr>
+                          
+                      </tbody>
+                  </table>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row mt-3 mb-3">
+        <div class="col-lg-6">
+          <div class="card">
+              <div class="card-title">
+                  <h4 class="text-primary mt-2 ml-2">SENTIMENT ANALYSIS FOR {{stock}} TWEETS</h4>
+              </div>
+                <img src="{{url_for('static', filename='sentiment.png')}}" />
+          </div>
+        </div>
+      
+        <div class="col-lg-6">
+          <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+              <h2 class="card-title">Tweets overall sentiment is => {{prediction}} </h2>
+              <p class="card-text">Overall tweets polarity</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 class="text">Final recommendation based on LSTM model and Sentiment analysis</h3>
+      <div class="col-lg-12 p-0 mt-2">
+        <div class="card text-white bg-success mb-3">
+          <div class="card-body">
+            <h2 class="card-title">Based on the LSTM prediction and Sentiment Analysis a {{idea}} in {{stock}} stock is expected ==> {{decision}} </h2>
+            <p class="card-text">Recommendation</p>
+          </div>
+        </div>
+      </div>
+
+       
+      <a  href="/">go to home page</a>
+      {% endif %}
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+    </div>
+    <!-- end sentiment -->
+
+
+  </div>
+  
+{% endblock %}

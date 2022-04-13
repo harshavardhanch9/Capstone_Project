@@ -1,0 +1,44 @@
+
+/* CSS HEX */
+:root {
+--backgroud-color: #0d0106ff;
+--primary-color: #3626a7ff;
+--secondary-color: #ff331fff;
+--text-color: #fff; 
+}
+
+body{
+    background-color: var(--backgroud-color);
+    color: var(--text-color);
+    font-family: 'Montserrat', sans-serif;
+
+}
+
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+.h-custom {
+  height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+  .h-custom {
+    height: 100%;
+  }
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-title {
+  font-size: 1.5rem;
+}
+
+.img-fluid {
+  height: 100%
+}
