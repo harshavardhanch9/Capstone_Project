@@ -29,7 +29,6 @@ MarkupSafe==2.0.1
 matplotlib==3.5.1
 multitasking==0.0.10
 murmurhash==1.0.6
-nltk==3.6.7
 numpy==1.22.1
 oauthlib==3.2.0
 packaging==21.3
