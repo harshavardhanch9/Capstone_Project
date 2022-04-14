@@ -50,10 +50,8 @@ six==1.16.0
 sklearn==0.0
 smart-open==5.2.1
 soupsieve==2.3.1
-spacy==3.2.1
 spacy-legacy==3.0.8
 spacy-loggers==1.0.1
-spacytextblob==3.0.1
 SQLAlchemy==1.4.31
 srsly==2.4.2
 textblob==0.15.3

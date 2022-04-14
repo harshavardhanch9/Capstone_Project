@@ -13,11 +13,11 @@ from twitterapi import *
 import matplotlib.pyplot as plt
 from lstm_prediction import final_out
 from lstm_prediction import recommend
-import spacy
-from spacytextblob.spacytextblob import SpacyTextBlob
+# import spacy
+# from spacytextblob.spacytextblob import SpacyTextBlob
 
-nlp = spacy.load('en_core_web_sm')
-nlp.add_pipe('spacytextblob')
+# nlp = spacy.load('en_core_web_sm')
+# nlp.add_pipe('spacytextblob')
 
 app = Flask(__name__)
 app.secret_key = 'replace later'
